@@ -30,6 +30,9 @@ takes_data  = true
 user_mode   = "puid-env"
 replaces    = "sabnzbd"
 
+[[ask]]
+capability = "dashboard.show"
+
 [[claim]]
 capability = "download.usenet"
 
