@@ -24,26 +24,32 @@ criticality = "core"
 memory_mib  = 150
 reaches     = "your Usenet provider"
 asks_for    = "Signs in with your account and fetches the articles a download is made of."
-provides    = ["download.usenet"]
-api         = { kind = "sabnzbd", key_source = "config-ini", path = "/config/sabnzbd.ini" }
 takes_data  = true
 user_mode   = "puid-env"
 replaces    = "sabnzbd"
 
+[[service]]
+id          = "sabnzbd-adapter"
+name        = "SABnzbd adapter"
+image       = "ghcr.io/lemonfiber/sabnzbd-adapter"
+digest      = "sha256:72b99f605b331550a606b8cf236e73121989105637196874472f1f7272625d65"
+tag         = "main-d21360374331"
+criticality = "core"
+reaches     = ""
+asks_for    = "Nothing beyond this machine. It answers lemonfiber's download.usenet contract by calling SABnzbd, beside it, with the key lemonfiber minted for it."
+config_path = "/config"
+listens     = 8080
+speaks      = ["download.usenet@1"]
+fronts      = "sabnzbd"
+provides    = ["download.usenet"]
+upstream    = { api_key = { secret = "upstream-key" } }
+
+[[secret]]
+id     = "upstream-key"
+of     = "sabnzbd"
+minted = true
+why    = "The key SABnzbd answers its API to, which the adapter in front of it presents"
+
 [[ask]]
+service    = "sabnzbd"
 capability = "dashboard.show"
-
-[[claim]]
-capability = "download.usenet"
-
-[[claim.probe]]
-id      = "guarded"
-request = { method = "GET", path = "/api?mode=queue&output=json" }
-expect  = { status = 403 }
-fixture = "recordings/sabnzbd/download-usenet-guarded.json"
-
-[[claim.probe]]
-id      = "queue"
-request = { method = "GET", path = "/api?mode=queue&output=json" }
-expect  = { status = 200, json_types = { "/queue/slots" = "list" } }
-fixture = "recordings/sabnzbd/download-usenet-queue.json"
