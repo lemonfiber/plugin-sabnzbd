@@ -1,5 +1,7 @@
-use super::describe;
+use super::{describe, Endpoint};
+use lemonfiber_fixtures::http::Fake;
 use lemonfiber_ports::http::Response;
+use lemonfiber_ports::service::Failure;
 
 fn answered(status: u16, body: impl Into<String>) -> Response {
     Response {
@@ -108,4 +110,25 @@ fn shortening_an_error_body_uses_no_character_a_terminal_might_not_have() {
     let detail = describe(&response);
 
     assert!(detail.is_ascii(), "{detail}");
+}
+
+#[test]
+fn a_json_answer_lends_a_refusal_only_its_message_never_the_fields_beside_it() {
+    let response = answered(
+        400,
+        r#"{"message":"bad","settings":{"password":"a-password-held"}}"#,
+    );
+    assert_eq!(describe(&response), "HTTP 400: bad");
+    let response = answered(403, r#"{"status":false,"error":"API Key Incorrect"}"#);
+    assert_eq!(describe(&response), "HTTP 403: API Key Incorrect");
+    let response = answered(400, r#"{"settings":{"apikey":"a-key-held"}}"#);
+    assert_eq!(describe(&response), "HTTP 400");
+}
+
+#[test]
+fn an_answer_in_the_wrong_shape_is_refused_without_quoting_what_it_held() {
+    let endpoint = Endpoint::new(Fake::silent(), "http://upstream", "upstream");
+    let refused = endpoint.decode::<Vec<u32>>(&answered(200, r#"["a-key-held"]"#), "the list");
+    assert!(matches!(refused, Err(Failure::Refused { detail, .. })
+        if detail == "the list: the answer is not in the shape expected at line 1 column 13"));
 }
