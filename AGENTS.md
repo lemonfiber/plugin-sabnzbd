@@ -43,9 +43,10 @@ change. `tests/conformance.rs` reads every recording with the core's own client.
   it for every call and never logs it.
 - **The core's crates move with the train.** The `rev` in `Cargo.toml` is the
   core commit `targets.toml` names, the same for every `lemonfiber-*` crate.
-- **Moving SABnzbd's digest** means recording every conformance case again
-  against the new image in the same change, moving `RELEASE` and `DIGEST` in
-  `src/adapter.rs` with it, and committing the `proofs.json` the checks write.
+- **Moving SABnzbd's digest** means recording every proof's response and
+  conformance case again against the new image in the same change, moving
+  `RELEASE` and `DIGEST` in `src/adapter.rs` with it, and committing the
+  `proofs.json` the checks write.
 
 ## Checks
 
