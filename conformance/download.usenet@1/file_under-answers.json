@@ -1,0 +1,16 @@
+{
+  "recorded_from": "lscr.io/linuxserver/sabnzbd@sha256:374051b90f64d107f8658dcd9b9065c28826afe14562647214f45057e119fc04",
+  "note": "A category filed under the folder the case names.",
+  "request": {
+    "method": "POST",
+    "path": "/lemonfiber/download.usenet/v1/file_under",
+    "accept": "application/json"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json"
+    },
+    "body_starts_with": "null"
+  }
+}
