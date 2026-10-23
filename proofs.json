@@ -3,14 +3,8 @@
   "against": "recordings",
   "proofs": [
     {
-      "id": "download.usenet/guarded",
-      "kind": "probe",
-      "outcome": "passed",
-      "detail": ""
-    },
-    {
-      "id": "download.usenet/queue",
-      "kind": "probe",
+      "id": "sabnzbd.guarded",
+      "kind": "proof",
       "outcome": "passed",
       "detail": ""
     }
