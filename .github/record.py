@@ -48,7 +48,7 @@ STARTUP_S = 180
 ANSWER_S = 30
 ADAPTER_PORT = 8080
 SEGMENT = re.compile(r"[a-z][a-z0-9_.]*")
-MAJOR = re.compile(r"[1-9][0-9]*")
+MAJOR = re.compile(r"[1-9]\d*")
 API_KEY = "api_key"
 NOTES = {
     "refuses-without-the-key": "Asked without the plugin's key: the kit refuses it before the adapter is reached.",
