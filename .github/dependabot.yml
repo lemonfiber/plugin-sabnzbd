@@ -1,8 +1,8 @@
 # Not configured here, deliberately:
 #
-#   The recorded responses in `conformance/` are a recording of another
-#   project's HTTP replies, not a dependency. Nothing resolves them and nothing
-#   has a version to bump.
+#   The recorded responses in `recordings/` and `conformance/` are a recording
+#   of another project's HTTP replies, not a dependency. Nothing resolves them
+#   and nothing has a version to bump.
 #
 #   The image `plugin.toml` names is pinned by digest and is not a dependency
 #   either — moving it is an author's decision about what this plugin installs

@@ -24,6 +24,7 @@ nothing else.
 | --- | --- |
 | `plugin.toml` | The part's manifest |
 | `config/sabnzbd/` | The files SABnzbd starts with, written into its configuration directory |
+| `recordings/sabnzbd/` | The responses its proofs are held to |
 | `src/` | The adapter |
 | `conformance/download.usenet@1/` | The adapter's answer to each conformance case, in front of the pinned SABnzbd |
 | `Dockerfile` | The adapter's image |
@@ -34,8 +35,8 @@ nothing else.
 
 The plugin verdict is one job of spec's
 [`first-party-plugin`](https://github.com/lemonfiber/spec/blob/main/.github/workflows/first-party-plugin.yml)
-workflow: the manifest as the lemonfiber `targets.toml` names reads it, and
-every pinned digest. The adapter is held to its
+workflow: the manifest as the lemonfiber `targets.toml` names reads it, every
+proof against its recording, and every pinned digest. The adapter is held to its
 format, its lints, its tests, full line coverage and its dependency policy, its
 image runs as lemonfiber runs it, and `recordings` takes every conformance case
 again against the pinned SABnzbd. `just ci` runs the gates that need nothing but

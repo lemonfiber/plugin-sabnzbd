@@ -27,8 +27,9 @@ change. `tests/conformance.rs` reads every recording with the core's own client.
 
 - **The plugin id is the service's id** (`ARCH-R266`). The container, the
   configuration directory, the settings and the journal keep their names.
-- **Its starting files sit under `config/sabnzbd/`** (`ARCH-R271`), and name the
-  key lemonfiber mints as `{{secret:upstream-key}}` (`ARCH-R316`).
+- **Its proofs' recordings sit under `recordings/sabnzbd/`**, and its starting
+  files under `config/sabnzbd/` (`ARCH-R271`), which name the key lemonfiber
+  mints as `{{secret:upstream-key}}` (`ARCH-R316`).
 - **Every service declares `reaches` and `asks_for`** (`ARCH-R270`).
 - **The reader is spec's `first-party-plugin` workflow's.** The one Python here
   is `.github/record.py`, CI harness that records the conformance cases.

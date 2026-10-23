@@ -50,6 +50,20 @@ of     = "sabnzbd"
 minted = true
 why    = "The key SABnzbd answers its API to, which the adapter in front of it presents"
 
+[[proof]]
+id      = "sabnzbd.guarded"
+service = "sabnzbd"
+title   = "SABnzbd shows its queue to nobody presenting nothing"
+fixture = "recordings/sabnzbd/queue-guarded.json"
+why     = """
+The queue names what the household is downloading and the account paying for
+it. Only the adapter asks it, with the key lemonfiber minted, so a SABnzbd that
+answered it to a caller presenting nothing would be telling every device that
+can reach it.
+"""
+request = { method = "GET", path = "/api?mode=queue&output=json" }
+expect  = { status = 403, body_starts_with = "API Key Required" }
+
 [[ask]]
 service    = "sabnzbd"
 capability = "dashboard.show"
