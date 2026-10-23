@@ -1,0 +1,23 @@
+{
+  "recorded_from": "lscr.io/linuxserver/sabnzbd@sha256:374051b90f64d107f8658dcd9b9065c28826afe14562647214f45057e119fc04",
+  "note": "Held to the active rate around the clock with no window, and read back.",
+  "request": {
+    "method": "POST",
+    "path": "/lemonfiber/download.usenet/v1/restrain",
+    "accept": "application/json"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json"
+    },
+    "json": {
+      "rates": {
+        "down": 1048576,
+        "up": null
+      },
+      "uploads": false,
+      "hours": null
+    }
+  }
+}

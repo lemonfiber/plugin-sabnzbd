@@ -1,0 +1,20 @@
+{
+  "recorded_from": "lscr.io/linuxserver/sabnzbd@sha256:374051b90f64d107f8658dcd9b9065c28826afe14562647214f45057e119fc04",
+  "note": "What it pulled in the month asked about, with no account configured.",
+  "request": {
+    "method": "POST",
+    "path": "/lemonfiber/download.usenet/v1/moved",
+    "accept": "application/json"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json"
+    },
+    "json": {
+      "down": 0,
+      "up": 0,
+      "since_start": false
+    }
+  }
+}
