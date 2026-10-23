@@ -3,11 +3,10 @@
 
 use std::sync::Arc;
 
+use lemonfiber_adapter_kit::credential::Holding;
+use lemonfiber_adapter_kit::endpoint::{form_encoded, Endpoint};
 use lemonfiber_ports::http::{Http, Method, Request};
 use lemonfiber_ports::service::Failure;
-
-use crate::credential::Holding;
-use crate::endpoint::{form_encoded, Endpoint};
 
 mod accounts;
 mod fetching;
