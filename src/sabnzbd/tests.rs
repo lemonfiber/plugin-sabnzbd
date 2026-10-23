@@ -1,10 +1,10 @@
 use std::sync::Arc;
 
+use lemonfiber_adapter_kit::credential::Holding;
 use lemonfiber_fixtures::http::{Answer, Fake};
 use lemonfiber_ports::service::{Failure, Fetching};
 
 use super::Sabnzbd;
-use crate::credential::Holding;
 
 pub(super) const BASE: &str = "http://127.0.0.1:8080";
 

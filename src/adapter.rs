@@ -8,6 +8,12 @@ use lemonfiber_contract::capabilities::download;
 
 use crate::sabnzbd::Sabnzbd;
 
+/// Where SABnzbd answers, by its service id and the port it listens on.
+pub const ADDRESS: &str = "http://sabnzbd:8080";
+
+/// The part of `upstream.json` holding the key SABnzbd answers its API to.
+pub const API_KEY: &str = "api_key";
+
 /// The upstream this adapter fronts, as its project names itself.
 pub const UPSTREAM: &str = "SABnzbd";
 
