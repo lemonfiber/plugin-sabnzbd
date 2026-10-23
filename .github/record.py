@@ -27,6 +27,7 @@ import argparse
 import json
 import os
 import pathlib
+import re
 import secrets
 import shutil
 import subprocess
@@ -35,6 +36,7 @@ import tempfile
 import time
 import tomllib
 import urllib.error
+import urllib.parse
 import urllib.request
 import uuid
 
@@ -45,6 +47,8 @@ JSON = "application/json"
 STARTUP_S = 180
 ANSWER_S = 30
 ADAPTER_PORT = 8080
+SEGMENT = re.compile(r"[a-z][a-z0-9_.]*")
+MAJOR = re.compile(r"[1-9][0-9]*")
 API_KEY = "api_key"
 NOTES = {
     "refuses-without-the-key": "Asked without the plugin's key: the kit refuses it before the adapter is reached.",
@@ -207,13 +211,22 @@ def recorded(base: str, key: str, pinned: str, speaks: list[str]) -> dict[tuple[
     for spoken in speaks:
         capability, major = spoken.split("@")
         for case in published_cases(spoken):
-            path = f"/lemonfiber/{capability}/v{major}/{case['operation']}"
+            path = operation_path(capability, major, case["operation"])
             status, kind, body = asked(base, path, key if case["keyed"] else None, case["asked"])
             note = NOTES.get(case["case"], "")
             if not note:
                 raise RuntimeError(f"{spoken}/{case['case']} has no note to record it with")
             said[(spoken, case["case"])] = recording(pinned, path, status, kind, body, note)
     return said
+
+
+def operation_path(capability: str, major: str, operation: str) -> str:
+    """Where an operation is asked, each segment held to the shape the contract writes it in."""
+    for segment, shape in ((capability, SEGMENT), (major, MAJOR), (operation, SEGMENT)):
+        if not shape.fullmatch(segment):
+            raise RuntimeError(f"{segment!r} is not a segment a contract names")
+    quoted = [urllib.parse.quote(segment, safe="") for segment in (capability, major, operation)]
+    return "/lemonfiber/{}/v{}/{}".format(*quoted)
 
 
 def filed(said: dict[tuple[str, str], dict], spoken: str, case: str, checking: bool) -> str | None:
