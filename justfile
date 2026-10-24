@@ -32,9 +32,11 @@ coverage:
 deny:
     cargo deny --log-level warn check
 
-# Every conformance recording, taken again and compared. Needs Docker.
+# Every recording, taken again with the adapter built from this tree and compared.
+# Needs Docker, and `lemonfiber` at the commit `targets.toml` names on the path.
 recordings:
-    python3 .github/record.py --check
+    docker build -q -t plugin-sabnzbd:pr .
+    lemonfiber plugin record . --check --adapter plugin-sabnzbd:pr
 
 # Spell check.
 typos:
