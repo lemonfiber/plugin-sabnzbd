@@ -26,6 +26,7 @@ reaches     = "your Usenet provider"
 asks_for    = "Signs in with your account and fetches the articles a download is made of."
 takes_data  = true
 user_mode   = "puid-env"
+native      = "sabnzbd"
 replaces    = "sabnzbd"
 
 [[service]]
