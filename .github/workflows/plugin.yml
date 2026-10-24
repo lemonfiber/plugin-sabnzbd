@@ -27,6 +27,9 @@ jobs:
           persist-credentials: false
       - name: The adapter, built from this tree
         run: docker build -q -t plugin-sabnzbd:pr .
+      - name: The upstream images plugin.toml pins
+        run: |
+          python3 -c 'import tomllib; print("\n".join(s["image"] + "@" + s["digest"] for s in tomllib.load(open("plugin.toml", "rb"))["service"] if "fronts" not in s))' | xargs -n1 docker pull -q
       - name: The lemonfiber targets.toml names
         id: core
         run: python3 -c 'import tomllib; print("commit=" + tomllib.load(open("targets.toml", "rb"))["commit"])' >> "$GITHUB_OUTPUT"

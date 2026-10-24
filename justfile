@@ -36,6 +36,7 @@ deny:
 # Needs Docker, and `lemonfiber` at the commit `targets.toml` names on the path.
 recordings:
     docker build -q -t plugin-sabnzbd:pr .
+    python3 -c 'import tomllib; print("\n".join(s["image"] + "@" + s["digest"] for s in tomllib.load(open("plugin.toml", "rb"))["service"] if "fronts" not in s))' | xargs -n1 docker pull -q
     lemonfiber plugin record . --check --adapter plugin-sabnzbd:pr
 
 # Spell check.
