@@ -50,6 +50,7 @@ id     = "upstream-key"
 of     = "sabnzbd"
 minted = true
 why    = "The key SABnzbd answers its API to, which the adapter in front of it presents"
+carried_from = { file = "/config/sabnzbd.ini", format = "ini", key = "misc.api_key" }
 
 [[proof]]
 id      = "sabnzbd.guarded"

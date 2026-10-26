@@ -11,7 +11,12 @@ pub(super) const BASE: &str = "http://127.0.0.1:8080";
 pub(super) const KEY: &str = "the-key";
 
 pub(super) fn client(replies: Vec<(u16, &'static str)>) -> (Sabnzbd, Arc<Fake>) {
-    let http = Fake::scripted(replies);
+    let http = Fake::in_turn(
+        replies
+            .into_iter()
+            .map(|(status, body)| Answer::reply(status, body))
+            .collect(),
+    );
     (
         Sabnzbd::new(http.clone(), BASE, Arc::new(KEY.to_owned())),
         http,
@@ -60,7 +65,7 @@ async fn without_a_key_nothing_is_asked_and_the_refusal_says_why() {
 
 #[tokio::test]
 async fn the_key_is_presented_as_a_query_field_written_as_a_form_writes_it() {
-    let http = Fake::scripted(vec![(200, r#"{"queue":{"paused":false}}"#)]);
+    let http = Fake::in_turn(vec![Answer::reply(200, r#"{"queue":{"paused":false}}"#)]);
     let pulled = Sabnzbd::new(http.clone(), BASE, Arc::new("a+b/c=".to_owned()))
         .pulling()
         .await;
